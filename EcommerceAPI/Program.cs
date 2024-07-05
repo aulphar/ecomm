@@ -1,4 +1,8 @@
+using AutoMapper;
+using EcommerceAPI;
 using EcommerceAPI.Data;
+using EcommerceAPI.Models;
+using EcommerceAPI.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +12,10 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("Default Connection"));
 });
+
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add services to the container.
 
@@ -31,4 +39,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//ApplyPendingMigrations();
+
 app.Run();
+
+// void ApplyPendingMigrations()
+// {
+//     using (var scope = app.Services.CreateScope())
+//     {
+//         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//         if (db.Database.GetPendingMigrations().Count() > 0)
+//         {
+//           db.Database.Migrate();  
+//         }
+//     }
+// }
