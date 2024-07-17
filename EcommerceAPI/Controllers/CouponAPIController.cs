@@ -93,6 +93,65 @@ namespace EcommerceAPI.Controllers
             return _response;
         }
 
+        [HttpDelete]
+        [Route("{id:int}")]
+        public ResponseDto DeleteCoupon(int id)
+        {
+            try
+            {
+
+                Coupon coupon = _db.Coupons.First(u => u.CouponId == id);
+                _db.Remove(coupon);
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                _response.IsSuccess = false;
+                _response.Message = e.Message;
+            }
+
+            return _response;
+        }
+
+        [HttpPut]
+        public ResponseDto UpdateCoupon([FromBody] CouponDto model)
+        {
+            try
+            {
+                Coupon couponobj = _mapper.Map<Coupon>(model);
+                _db.Coupons.Update(couponobj);
+                _db.SaveChanges();
+                _response.Result = _mapper.Map<CouponDto>(couponobj);
+            }
+            catch (Exception e)
+            {
+                _response.IsSuccess = false;
+                _response.Message = e.Message;
+            }
+        
+            return _response;
+        }
+
+        [HttpPatch]
+        public ResponseDto PartialUpdateCoupon([FromBody] CouponDto model)
+        {
+            try
+            {
+                Coupon couponobj = _mapper.Map<Coupon>(model);
+                _db.Coupons.Update(couponobj);
+                _db.SaveChanges();
+                _response.Result = _mapper.Map<CouponDto>(couponobj);
+            }
+            catch (Exception e)
+            {
+                _response.IsSuccess = false;
+                _response.Message = e.Message;
+            }
+        
+            return _response;
+        }
+
+
 
 
     }
