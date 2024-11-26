@@ -1,14 +1,15 @@
 using AutoMapper;
 using EcommerceAPI.Data;
-using EcommerceAPI.Models;
-using EcommerceAPI.Models.Dto;
-using Microsoft.AspNetCore.Http;
+using EcommerceAPI.Models.CouponModels;
+using EcommerceAPI.Models.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize]
     public class CouponAPIController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -75,6 +76,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPost]
+       // [Authorize(Roles = "ADMIN")]
         public ResponseDto CreateCoupon([FromBody] CouponDto model)
         {
             try
@@ -95,6 +97,7 @@ namespace EcommerceAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+      //  [Authorize(Roles = "ADMIN")]
         public ResponseDto DeleteCoupon(int id)
         {
             try
@@ -114,6 +117,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPut]
+  //      [Authorize(Roles = "ADMIN")]
         public ResponseDto UpdateCoupon([FromBody] CouponDto model)
         {
             try
@@ -133,6 +137,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPatch]
+      //  [Authorize(Roles = "ADMIN")]
         public ResponseDto PartialUpdateCoupon([FromBody] CouponDto model)
         {
             try

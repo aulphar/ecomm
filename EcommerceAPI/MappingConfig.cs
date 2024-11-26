@@ -1,6 +1,7 @@
 using AutoMapper;
-using EcommerceAPI.Models;
-using EcommerceAPI.Models.Dto;
+using EcommerceAPI.Models.CouponModels;
+using EcommerceAPI.Models.Dtos;
+using EcommerceAPI.Models.ProductModels;
 
 namespace EcommerceAPI;
 
@@ -12,6 +13,8 @@ public class MappingConfig
         {
             config.CreateMap<Coupon, CouponDto>();
             config.CreateMap<CouponDto, Coupon>();
+            config.CreateMap<ProductDto, Product>();
+            config.CreateMap<Product, ProductDto>();
 
         });
         return mappingconfig;
